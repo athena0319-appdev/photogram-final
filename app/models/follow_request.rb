@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: followrequests
+# Table name: follow_requests
 #
 #  id           :integer          not null, primary key
 #  status       :string
@@ -9,5 +9,5 @@
 #  recipient_id :integer
 #  sender_id    :integer
 #
-class Followrequest < ApplicationRecord
+class FollowRequest < ApplicationRecord
 end

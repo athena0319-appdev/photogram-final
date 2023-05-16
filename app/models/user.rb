@@ -15,4 +15,9 @@
 #  updated_at           :datetime         not null
 #
 class User < ApplicationRecord
+
+  has_many(:photos, { :class_name => "Photo", :foreign_key => "owner_id", :dependent => :destroy })
+  has_many(:followrequests, { :class_name => "Followrequest", :foreign_key => "recipient_id", :dependent => :destroy })
+  has_many(:followrequests, { :class_name => "Followrequest", :foreign_key => "recipient_id", :dependent => :destroy })
+  has_many(:likes, { :class_name => "Like", :foreign_key => "fan_id", :dependent => :destroy })
 end

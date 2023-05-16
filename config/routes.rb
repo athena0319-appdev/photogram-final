@@ -1,5 +1,24 @@
 Rails.application.routes.draw do
   
+  # Routes for the Follow request resource:
+
+  # CREATE
+  post("/insert_follow_request", { :controller => "follow_requests", :action => "create" })
+          
+  # READ
+  get("/follow_requests", { :controller => "follow_requests", :action => "index" })
+  
+  get("/follow_requests/:path_id", { :controller => "follow_requests", :action => "show" })
+  
+  # UPDATE
+  
+  post("/modify_follow_request/:path_id", { :controller => "follow_requests", :action => "update" })
+  
+  # DELETE
+  get("/delete_follow_request/:path_id", { :controller => "follow_requests", :action => "destroy" })
+
+  #------------------------------
+
   get("/", { :controller => "users", :action => "index" })
   
   # Routes for the Like resource:
@@ -39,27 +58,13 @@ Rails.application.routes.draw do
   get("/delete_comment/:path_id", { :controller => "comments", :action => "destroy" })
 
   #------------------------------
-
-  # Routes for the Followrequest resource:
-
-  # CREATE
-  post("/insert_followrequest", { :controller => "followrequests", :action => "create" })
-          
-  # READ
-  get("/followrequests", { :controller => "followrequests", :action => "index" })
-  
-  get("/followrequests/:path_id", { :controller => "followrequests", :action => "show" })
-  
-  # UPDATE
-  
-  post("/modify_followrequest/:path_id", { :controller => "followrequests", :action => "update" })
-  
-  # DELETE
-  get("/delete_followrequest/:path_id", { :controller => "followrequests", :action => "destroy" })
-
-  #------------------------------
-
   # Routes for the User resource:
+
+   # User routes
+   get("/user_sign_up", {:controller => "users", :action => "new_registration_form"})
+   get("/user_sign_out", {:controller => "users", :action => "toast_cookies"})
+   get("/user_sign_in", {:controller => "users", :action => "new_session_form"})
+   post("/verify_credentials", {:controller => "users", :action => "authenticate"})
 
   # CREATE
   post("/insert_user", { :controller => "users", :action => "create" })

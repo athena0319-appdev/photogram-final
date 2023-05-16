@@ -1,7 +1,7 @@
 <div>
   <div>
     <h1>
-      List of all followrequests
+      List of all follow requests
     </h1>
   </div>
 </div>
@@ -11,10 +11,10 @@
 <div>
   <div>
     <h2>
-      Add a new followrequest
+      Add a new follow request
     </h2>
 
-    <form action="/insert_followrequest" method="post">
+    <form action="/insert_follow_request" method="post">
       <div>
         <label for="recipient_id_box">
           Recipient
@@ -40,7 +40,7 @@
       </div>
 
       <button>
-        Create followrequest
+        Create follow request
       </button>
     </form>
   </div>
@@ -79,33 +79,33 @@
         </th>
       </tr>
 
-      <% @list_of_followrequests.each do |a_followrequest| %>
+      <% @list_of_follow_requests.each do |a_follow_request| %>
       <tr>
         <td>
-          <%= a_followrequest.id %>
+          <%= a_follow_request.id %>
         </td>
 
         <td>
-          <%= a_followrequest.recipient_id %>
+          <%= a_follow_request.recipient_id %>
         </td>
 
         <td>
-          <%= a_followrequest.sender_id %>
+          <%= a_follow_request.sender_id %>
         </td>
 
         <td>
-          <%= a_followrequest.status %>
+          <%= a_follow_request.status %>
         </td>
 
         <td>
-          <%= time_ago_in_words(a_followrequest.created_at) %> ago
+          <%= time_ago_in_words(a_follow_request.created_at) %> ago
         </td>
         <td>
-          <%= time_ago_in_words(a_followrequest.updated_at) %> ago
+          <%= time_ago_in_words(a_follow_request.updated_at) %> ago
         </td>
 
         <td>
-          <a href="/followrequests/<%= a_followrequest.id %>">
+          <a href="/follow_requests/<%= a_follow_request.id %>">
             Show details
           </a>
         </td>
