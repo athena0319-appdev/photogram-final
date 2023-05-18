@@ -12,7 +12,7 @@ task({ :sample_data => :environment}) do
   Photo.delete_all
   Like.delete_all
   Comment.delete_all
-  Followrequest.delete_all
+  FollowRequest.delete_all
 
   users = [
     {id: 81, username: "galen", email: "galen@example.com", private: false, likes_count: 97, comments_count: 98, created_at: "2015-01-19 09:24:34", updated_at: "2019-10-08 10:25:00"},

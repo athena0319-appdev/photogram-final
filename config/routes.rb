@@ -67,7 +67,7 @@ Rails.application.routes.draw do
    post("/verify_credentials", {:controller => "users", :action => "authenticate"})
 
   # CREATE
-  post("/insert_user", { :controller => "users", :action => "create" })
+   get("/insert_user", { :controller => "users", :action => "create" })
           
   # READ
   get("/users", { :controller => "users", :action => "index" })

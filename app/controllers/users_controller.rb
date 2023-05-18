@@ -3,12 +3,12 @@ class UsersController < ApplicationController
   def authenticate
     # get the user from params
     # get the password from params
-    un = params.fetch("input_username")
+    un = params.fetch("input_email")
     pw = params.fetch("input_password")
     
     # look up the record from the db matching username
-    user = User.where({ :username => un}).at(0)
-  
+    user = User.where({ :email => un}).at(0)
+    p user 
     # if there is no record, redirect back to sign in form
     if user.nil?
       redirect_to("/user_sign_in", {:alert => "No one by that name round these parts"}) and return
@@ -49,32 +49,26 @@ class UsersController < ApplicationController
   end
 
   def show
-    the_id = params.fetch("path_id")
-
-    matching_users = User.where({ :id => the_id })
-
-    @the_user = matching_users.at(0)
-
+    the_username = params.fetch("path_id")
+    @the_user = User.where({ :username => the_username }).at(0)
     render({ :template => "users/show.html.erb" })
   end
 
   def create
     the_user = User.new
-    the_user.comments_count = params.fetch("query_comments_count")
-    the_user.email = params.fetch("query_email")
-    the_user.password_digest = params.fetch("query_password_digest")
+    # other fields...
+    the_user.email = params.fetch("input_email")
+    the_user.username = params.fetch("input_username")
+    the_user.password = params.fetch("input_password")
+    the_user.password_confirmation = params.fetch("input_password_confirmation")
     the_user.private = params.fetch("query_private", false)
-    the_user.username = params.fetch("query_username")
-    the_user.photos_count = params.fetch("query_photos_count")
-    the_user.followrequests_count = params.fetch("query_followrequests_count")
-    the_user.likes_count = params.fetch("query_likes_count")
-
+    # other fields...
+    save_status = the_user.save
     if save_status == true
-      the_user.save
-      session.store(:user_id, user.id)
-      redirect_to("/users/#{user.username}", {:notice => "Welcome, " + user.username + "!"})
+      session.store(:id, the_user.id)
+      redirect_to("/users", {:notice => "User account created successfully."})
     else 
-      redirect_to("/user_sign_up", { :alert => user.errors.full_messages.to_sentence})
+      redirect_to("/user_sign_up", { :alert => the_user.errors.full_messages.to_sentence})
     end
   end
 
