@@ -6,22 +6,18 @@
   </div>
 </div>
 
-<%= form_with model: @document, local: true do |form| %>
-  <div class="field">
-    <%= form.label :file %>
-    <%= form.file_field :file %>
-  </div>
+<% if session.fetch(:user_id)!= @current_user %>
 
-  <%= form.submit %>
-<% end %>
+  <form action="/insert_photo_record" method="post" enctype="multipart/form-data">
+    <label for="image">Image</label>
+    <input id="image" type="file" name="image" placeholder="Enter a URL for the image...">
 
+    <label for="browser_caption">Caption</label>
+    <textarea id="browser_caption" name="query_caption" placeholder="Enter a caption for the photo..."></textarea>
 
-<%= form_for(Photo.new, url: "/photos", method: "post") do |f| %>
-  <%= f.label :caption %>
-  <%= f.text_field :caption %>
-  
-  <%= f.submit "Add photo" %>
-<% end %>
+    <button>Add photo</button>
+  </form>
+<% end%>
 <hr>
 <hr>
 <div>

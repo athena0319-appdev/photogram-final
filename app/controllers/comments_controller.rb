@@ -1,4 +1,9 @@
 class CommentsController < ApplicationController
+  def current_user
+    @current_user = User.where({:id => session[:user_id]}).at(0)
+    return @current_user
+  end
+  
   def index
     matching_comments = Comment.all
 
@@ -19,10 +24,10 @@ class CommentsController < ApplicationController
 
   def create
     the_comment = Comment.new
-    the_comment.author_id = params.fetch("query_author_id")
-    the_comment.body = params.fetch("query_body")
-    the_comment.photo_id = params.fetch("query_photo_id")
-
+    #the_comment.author_id = params.fetch("query_author_id")
+    the_comment.body = params.fetch("input_body")
+    the_comment.photo_id = params.fetch("input_photo_id") 
+the_comment.author_id = params["input_user_id"]
     if the_comment.valid?
       the_comment.save
       redirect_to("/comments", { :notice => "Comment created successfully." })

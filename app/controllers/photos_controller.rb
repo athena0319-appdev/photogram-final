@@ -1,10 +1,12 @@
 class PhotosController < ApplicationController
+  def current_user
+    @current_user = User.where({:id => session[:user_id]}).at(0)
+    return @current_user
+  end
   def index
     matching_photos = Photo.all
-    
-
     @list_of_photos = matching_photos.order({ :created_at => :desc })
-
+    @current_user = self.current_user
     render({ :template => "photos/index.html.erb" })
   end
 

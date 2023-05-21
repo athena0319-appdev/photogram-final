@@ -12,32 +12,54 @@
   <dd><%= @the_photo.caption %></dd>
   
   <dt>Owner</dt>
-  <dd><%= @the_photo.owner_id %></dd>
+  <dd><%= @the_photo.owner.username %></dd>
   
   <dt>Posted</dt>
-  <dd><%= time_ago_in_words(@the_photo.created_at) %> ago
+  <dd><%= time_ago_in_words(@the_photo.created_at) %> ago</dd>
 
   <dt>Likes count</dt>
   <dd><%= @the_photo.likes_count %></dd>
 
   <dt>Fans</dt>
-  <dd>
-  <ul>
-    <% @the_photo.likes.each do |like| %>
-      <li><%= like.fan_id %></li>
+  <dd><ul><% @the_photo.likes.each do |like| %>
+      <li><%= like.fan.username %></li>
     <% end %>
-  </ul>
-</dd>
+  </ul></dd>
 
-  <dt>Add a fan</dt>
-       <button>Like</button>
-</form>
-      </dd>
-    </dl>
-  </div>
+<dt>Add a fan</dt>
+    <button>Like</button>
+
 </div>
 
 <hr>
+
+<% if session[:self_id] && @the_photo.owner_id == session[:self_id] %>
+<% if user.username ==  @the_photo.poster.username %>
+  <dt>Edit photo</dt>
+  <dd>
+    <form action="/update_photo/<%= @the_photo.id %>" method="post" enctype="multipart/form-data">
+
+    <label for="browser_image">Image URL</label>
+      <input id="browser_image" type="file" name="query_image" placeholder="Enter a URL for the image..." value="<%= @the_photo.image %>">
+
+      <label for="browser_caption">Caption</label>
+      <textarea id="browser_caption" name="input_caption" placeholder="Enter a caption for the photo..."><%= @the_photo.caption %></textarea>
+
+      <button>Update photo</button>
+    </form>
+  </dd>
+
+  <dt>Delete photo</dt>
+  <dd>
+    <a href="/delete_photo/<%= @the_photo.id %>;">
+      Delete this photo
+    </a>
+  </dd>
+
+  <% end%>
+  <% end %>
+
+
 <h2>Comments</h2>
 
 <table>
@@ -58,46 +80,16 @@
 
   
     
-<div>
-  <label for="caption_box">Add a new comment</label>
+<h3>Add a new comment</h3>
 
-  <textarea id="caption_box" name="query_caption">Enter a comment...</textarea></div>
-  <button>Add comment</button>  
-  </form>
+<form action="/insert_comment_record" method="post">
+  <input id="browser_photo_id" type="hidden" value="<%= @the_photo.id %>" name="input_photo_id">
+  <input id="browser_user_id" type="hidden" value="<%= @current_user.id %>" name="input_user_id">
+
+  <label for="browser_comment">Comment</label>
+  <textarea id="browser_comment" name="input_body" placeholder="Enter a comment..."></textarea>
+
+  <button>Add comment</button>
+</form>
   </div>
 </div>
-
-<% if session[:self_id] && @the_photo.user_id == session[:self_id] %>
-
-
-<dt>Image URL</dt>
-
-<%= form_with model: @document, local: true do |form| %>
-  <div class="field">
-    <%= form.label :file %>
-    <%= form.file_field :file %>
-  </div>
-  <button>Upload photo</button>
-  
-  <div>
-  <dt>Caption</dt>
-  <label for="caption_box">Add a new comment</label>
-
-  <textarea id="caption_box" name="query_caption"><%=@the_photo.caption%></textarea></div>
-  <button>Add comment</button>  
-  </form>
-<dt>Delete photo</dt>
-  <dd>
-    <a href="/delete_photo/<%=@the_photo.id%>;">
-      Delete this photo
-    </a>
-  </dd>
-
-  </div>
-
-  <%= form.submit %>
-<% end %>
-
-<% end %>
-<hr>
-end

@@ -79,7 +79,7 @@ Rails.application.routes.draw do
   # Routes for the Comment resource:
 
   # CREATE
-  post("/insert_comment", { :controller => "comments", :action => "create" })
+  post("/insert_comment_record", { :controller => "comments", :action => "create" })
           
   # READ
   get("/comments", { :controller => "comments", :action => "index" })
@@ -99,7 +99,7 @@ Rails.application.routes.draw do
   # Routes for the Photo resource:
 
   # CREATE
-  post("/insert_photo", { :controller => "photos", :action => "create" })
+  post("/insert_photo_record", { :controller => "photos", :action => "create" })
           
   # READ
   get("/photos", { :controller => "photos", :action => "index" })
