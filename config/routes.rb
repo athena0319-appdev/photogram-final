@@ -1,5 +1,42 @@
 Rails.application.routes.draw do
   
+  get("/", { :controller => "users", :action => "index" })    
+
+
+  # Routes for the User account:
+  get("/users", { :controller => "users", :action => "index" })
+  get("/users/:path_username", { :controller => "users", :action => "show" })
+  get("/users/:path_username/liked_photos", { :controller => "users", :action => "liked_photos" })
+  get("/users/:path_username/feed", { :controller => "users", :action => "feed" })
+  get("/users/:path_username/discover", { :controller => "users", :action => "discover" })
+  # SIGN UP FORM
+  get("/user_sign_up", { :controller => "users", :action => "sign_up_form" })        
+  # CREATE RECORD
+  get("/insert_user", { :controller => "users", :action => "create"  })
+  post("/insert_user", { :controller => "users", :action => "create"  })
+      
+  # EDIT PROFILE FORM        
+  get("/edit_user_profile", { :controller => "users", :action => "edit_profile_form" })       
+  # UPDATE RECORD
+  post("/modify_user", { :controller => "users", :action => "update" })
+  
+  # DELETE RECORD
+  get("/cancel_user_account", { :controller => "users", :action => "destroy" })
+
+  # ------------------------------
+
+  # SIGN IN FORM
+  get("/user_sign_in", { :controller => "users", :action => "sign_in_form" })
+  # AUTHENTICATE AND STORE COOKIE
+  post("/user_verify_credentials", { :controller => "users", :action => "create_cookie" })
+  
+  # SIGN OUT        
+  get("/user_sign_out", { :controller => "users", :action => "destroy_cookies" })
+             
+  #------------------------------
+
+    #------------------------------
+
   # Routes for the Follow request resource:
 
   # CREATE
@@ -19,8 +56,7 @@ Rails.application.routes.draw do
 
   #------------------------------
 
-  get("/", { :controller => "users", :action => "index" })
-  
+ 
   # Routes for the Like resource:
 
   # CREATE
@@ -58,32 +94,7 @@ Rails.application.routes.draw do
   get("/delete_comment/:path_id", { :controller => "comments", :action => "destroy" })
 
   #------------------------------
-  # Routes for the User resource:
-
-   # User routes
-   get("/user_sign_up", {:controller => "users", :action => "new_registration_form"})
-   get("/user_sign_out", {:controller => "users", :action => "toast_cookies"})
-   get("/user_sign_in", {:controller => "users", :action => "new_session_form"})
-   post("/verify_credentials", {:controller => "users", :action => "authenticate"})
-
-  # CREATE
-   get("/insert_user", { :controller => "users", :action => "create" })
-          
-  # READ
-  get("/users", { :controller => "users", :action => "index" })
-  
-  get("/users/:path_id", { :controller => "users", :action => "show" })
-  
-  # UPDATE
-  
-  post("/modify_user/:path_id", { :controller => "users", :action => "update" })
-  
-  # DELETE
-  get("/delete_user/:path_id", { :controller => "users", :action => "destroy" })
-
-  #------------------------------
-
-  #------------------------------
+ 
 
   # Routes for the Photo resource:
 
@@ -92,7 +103,7 @@ Rails.application.routes.draw do
           
   # READ
   get("/photos", { :controller => "photos", :action => "index" })
-  
+  post("/photos", { :controller => "photos", :action => "index" })
   get("/photos/:path_id", { :controller => "photos", :action => "show" })
   
   # UPDATE
@@ -101,6 +112,8 @@ Rails.application.routes.draw do
   
   # DELETE
   get("/delete_photo/:path_id", { :controller => "photos", :action => "destroy" })
+
+    
 
   #------------------------------
 

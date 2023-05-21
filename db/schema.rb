@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_05_16_203334) do
+ActiveRecord::Schema.define(version: 2023_05_21_020625) do
 
   create_table "comments", force: :cascade do |t|
     t.integer "author_id"
@@ -20,15 +20,13 @@ ActiveRecord::Schema.define(version: 2023_05_16_203334) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "follow_requests", force: :cascade do |t|
-    t.integer "recipient_id"
-    t.integer "sender_id"
-    t.string "status"
+  create_table "documents", force: :cascade do |t|
+    t.string "file"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "followrequests", force: :cascade do |t|
+  create_table "follow_requests", force: :cascade do |t|
     t.integer "recipient_id"
     t.integer "sender_id"
     t.string "status"
@@ -47,7 +45,6 @@ ActiveRecord::Schema.define(version: 2023_05_16_203334) do
     t.text "caption"
     t.integer "comments_count"
     t.string "image"
-    t.integer "like_count"
     t.integer "owner_id"
     t.integer "likes_count"
     t.datetime "created_at", precision: 6, null: false
@@ -55,16 +52,18 @@ ActiveRecord::Schema.define(version: 2023_05_16_203334) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.integer "comments_count"
     t.string "email"
     t.string "password_digest"
+    t.string "user"
+    t.integer "comments_count"
+    t.integer "likes_count"
     t.boolean "private"
     t.string "username"
-    t.integer "photos_count"
-    t.integer "followrequests_count"
-    t.integer "likes_count"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "follow_requests"
+    t.integer "followrequest_count"
+    t.integer "photos_count", default: 0
   end
 
 end

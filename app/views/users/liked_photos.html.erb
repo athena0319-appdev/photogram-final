@@ -1,0 +1,100 @@
+<div>
+  <div>
+    <h1>
+      <%= @the_user.username %>
+    </h1>
+ 
+ <dt>Private</dt>
+  <dd><%= @the_user.private %></dd>
+
+ <dt>Followers</dt>
+  <dd>
+    4
+
+    </div>
+
+  <h4>Pending follow requests</h4>
+        <ul>
+          <li>
+            drew
+
+            <form action="/modify_follow_request/1815" method="post">
+              <input name="query_status" value="accepted" type="hidden">
+
+              <button>
+                Accept
+              </button>
+              <button>
+                Reject
+              </button>
+            </form>
+  <div>
+
+<dt>Edit user</dt>
+
+    <form action="/modify_user/<%=@the_user.id%>"  method="post" >
+     
+   
+        <label for="username_box">
+          Username
+        </label>
+
+        <input type="text" id="username_box" name="query_username" value="<%= @the_user.username %>">
+    
+
+ 
+        <input type="checkbox" id="private_box" name="query_private" value="1" <%= "checked" if @the_user.private %>>
+
+        <label for="private_box">
+            Private
+        </label>
+   
+      <button>
+        Update user
+      </button>
+    </form>  
+<div>
+<ul>
+  <li><a href="/users/ <%= @the_user.id %>">Profile</a></li>
+  <li><a href="/users/<%= @the_user.username %>/liked_photos">Liked photos</a></li>
+  <li><a href="/users/<%= @the_user.username %>/feed">Feed</a></li>
+  <li><a href="/users/<%= @the_user.username %>/discover">Discover</a></li>
+</ul>
+</div>
+
+
+
+  <dt>Own photos</dt>
+  <dd><% @the_user.own_photos.each do |a_photo| %></dd>
+<table>
+  
+        <tr>
+        <td>
+          <img src="<%=a_photo.image %>">
+        </td>
+
+        <td>
+          <%= a_photo.caption %>
+        </td>
+
+        <td>
+          <%= a_photo.owner_id %>
+        </td>
+
+        <td>
+          <%= a_photo.likes_count %>
+        </td>
+        
+        <td>
+          <a href="/photos/<%= a_photo.id %>">
+            Show details
+          </a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+     
+  </div>
+</div>
+
+<hr>

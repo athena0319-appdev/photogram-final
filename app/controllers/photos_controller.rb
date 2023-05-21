@@ -1,6 +1,7 @@
 class PhotosController < ApplicationController
   def index
     matching_photos = Photo.all
+    
 
     @list_of_photos = matching_photos.order({ :created_at => :desc })
 
@@ -58,5 +59,25 @@ class PhotosController < ApplicationController
     the_photo.destroy
 
     redirect_to("/photos", { :notice => "Photo deleted successfully."} )
+  end
+
+  def new
+    @document = Document.new
+  end
+  
+  def create
+    @document = Document.new(document_params)
+  
+    if @document.save
+      redirect_to @document, notice: 'File uploaded successfully.'
+    else
+      render :new
+    end
+  end
+  
+  private
+  
+  def document_params
+    params.require(:document).permit(:file)
   end
 end

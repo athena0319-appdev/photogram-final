@@ -1,131 +1,103 @@
 <div>
   <div>
     <h1>
-      Photo #<%= @the_photo.id %> details
+      Photo details
     </h1>
 
-    <div>
-      <div>
-        <a href="/photos">
-          Go back
-        </a>
-      </div>
+  <dt>Image</dt>
+  
+  <dd><img src="<%= @the_photo.image %>" class="img-responsive"></dd>
 
-      <div>
-        <a href="/delete_photo/<%= @the_photo.id %>">
-          Delete photo
-        </a>
-      </div>
-    </div>
+  <dt>Caption</dt>
+  <dd><%= @the_photo.caption %></dd>
+  
+  <dt>Owner</dt>
+  <dd><%= @the_photo.owner_id %></dd>
+  
+  <dt>Posted</dt>
+  <dd><%= time_ago_in_words(@the_photo.created_at) %> ago
 
-    <dl>
-      <dt>
-        Caption
-      </dt>
-      <dd>
-        <%= @the_photo.caption %>
-      </dd>
+  <dt>Likes count</dt>
+  <dd><%= @the_photo.likes_count %></dd>
 
-      <dt>
-        Comments count
-      </dt>
-      <dd>
-        <%= @the_photo.comments_count %>
-      </dd>
+  <dt>Fans</dt>
+  <dd>
+  <ul>
+    <% @the_photo.likes.each do |like| %>
+      <li><%= like.fan_id %></li>
+    <% end %>
+  </ul>
+</dd>
 
-      <dt>
-        Image
-      </dt>
-      <dd>
-        <img src="<%= @the_photo.image %>" class="img-responsive">
-      </dd>
-
-      <dt>
-        Owner
-      </dt>
-      <dd>
-        <%= @the_photo.owner_id %>
-      </dd>
-
-      <dt>
-        Likes count
-      </dt>
-      <dd>
-        <%= @the_photo.likes_count %>
-      </dd>
-
-      <dt>
-        Created at
-      </dt>
-      <dd>
-        <%= time_ago_in_words(@the_photo.created_at) %> ago
-      </dd>
-
-      <dt>
-        Updated at
-      </dt>
-      <dd>
-        <%= time_ago_in_words(@the_photo.updated_at) %> ago
+  <dt>Add a fan</dt>
+       <button>Like</button>
+</form>
       </dd>
     </dl>
   </div>
 </div>
 
 <hr>
+<h2>Comments</h2>
+
+<table>
+  <tr>
+    <th>Commenter</th>
+    <th>Comment</th>
+    <th>Posted</th>
+  </tr>
+
+<% @the_photo.comments.each do |a_comment|%>
+  <tr>
+    <td> <%=a_comment.author.username%> </td>
+    <td> <%=a_comment.body%></td>
+    <td><%=a_comment.created_at%></td>
+  <% end %>
+  </tr>
 
 
+  
+    
 <div>
-  <div>
-    <h2>
-      Edit photo
-    </h2>
+  <label for="caption_box">Add a new comment</label>
 
-    <form action="/modify_photo/<%= @the_photo.id %>"  method="post" >
-      <div>
-        <label for="caption_box">
-          Caption
-        </label>
-
-        <textarea id="caption_box" name="query_caption"><%= @the_photo.caption %></textarea>
-      </div>
-
-      <div>
-        <label for="comments_count_box">
-          Comments count
-        </label>
-
-        <input type="text" id="comments_count_box" name="query_comments_count" value="<%= @the_photo.comments_count %>">
-      </div>
-
-      <div>
-        <label for="image_box">
-          Image
-        </label>
-
-        <input type="text" id="image_box" name="query_image" value="<%= @the_photo.image %>">
-      </div>
-
-      <div>
-        <label for="owner_id_box">
-          Owner
-        </label>
-
-        <input type="text" id="owner_id_box" name="query_owner_id" value="<%= @the_photo.owner_id %>">
-      </div>
-
-      <div>
-        <label for="likes_count_box">
-          Likes count
-        </label>
-
-        <input type="text" id="likes_count_box" name="query_likes_count" value="<%= @the_photo.likes_count %>">
-      </div>
-
-      <button>
-        Update photo
-      </button>
-    </form>
+  <textarea id="caption_box" name="query_caption">Enter a comment...</textarea></div>
+  <button>Add comment</button>  
+  </form>
   </div>
 </div>
 
+<% if session[:self_id] && @the_photo.user_id == session[:self_id] %>
+
+
+<dt>Image URL</dt>
+
+<%= form_with model: @document, local: true do |form| %>
+  <div class="field">
+    <%= form.label :file %>
+    <%= form.file_field :file %>
+  </div>
+  <button>Upload photo</button>
+  
+  <div>
+  <dt>Caption</dt>
+  <label for="caption_box">Add a new comment</label>
+
+  <textarea id="caption_box" name="query_caption"><%=@the_photo.caption%></textarea></div>
+  <button>Add comment</button>  
+  </form>
+<dt>Delete photo</dt>
+  <dd>
+    <a href="/delete_photo/<%=@the_photo.id%>;">
+      Delete this photo
+    </a>
+  </dd>
+
+  </div>
+
+  <%= form.submit %>
+<% end %>
+
+<% end %>
 <hr>
+end
